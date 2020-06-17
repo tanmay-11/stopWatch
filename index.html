@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<style>
+    body.jumbotron {
+        font-family: monospace;
+        padding: 30px;
+    }
+
+    .timer {
+        font-size: 100px;
+    }
+</style>
+<title>Document</title>
+</head>
+
+<body>
+
+    <div class="jumbotron text-center ">
+
+        <!---   timer    --->
+        <div class="timer">
+            <span class="minutes">00</span> : <span class="seconds">00</span>
+        </div>
+        <!---   timer buttons   --->
+        <div class="timer-buttons">
+            <button class="btn btn-lg" data-type="start" style="background: rgb(110, 250, 164 )"> Start </button>
+            <button class="btn btn-lg" data-type="stop" style="background: lightcoral;"> Stop </button>
+            <button class="btn btn-link btn-block" data-type="reset"
+                style="text-decoration: none; font-size: 20px ;color: rgb(119, 136, 153);">
+                Reset
+            </button>
+        </div>
+    </div>
+    <script>
+
+        //    geathering all query selectors
+        const startButton = document.querySelector('[data-type="start"]')
+        const stopButton = document.querySelector('[data-type="stop"]')
+        const resetButton = document.querySelector('[data-type="reset"]')
+        const minutes = document.querySelector('.minutes');
+        const seconds = document.querySelector('.seconds');
+        let timemrTime = 00;
+        let isRunning = false
+        let interval;
+
+
+        //    Developing functions 
+
+
+        function startTimmer() {
+            if (isRunning) return;
+
+            isRunning = true;
+            interval = setInterval(incrementTimmer, 1000);
+        }
+
+
+        function stopTimmer() {
+            if (!isRunning) return;
+
+            isRunning = false;
+            clearInterval(interval);
+        }
+
+        function resetTimmer() {
+            stopTimmer()
+            timemrTime = '0';
+            minutes.innerText = '00';
+            seconds.innerText = '00';
+        }
+
+        function incrementTimmer() {
+
+            timemrTime++;
+
+            const numofMinutes = Math.floor(timemrTime / 60);
+            const numofSeconds = timemrTime % 60;
+
+            console.log(numofMinutes, numofSeconds)
+
+            seconds.innerText = pad(numofSeconds);
+            minutes.innerText = pad(numofMinutes);
+
+
+
+        }
+
+        function pad(number) {
+            // return (number < 10)? '0'+ number : number; // on this fucntion insted of using the normal if statement i have used "ternary opertor" where i can inside the parenthese i have typed the the if statement and just  after the '?' i have the true value and next to it i ahve typed the "else" value.
+            if (number < 10) {
+                return '0' + number;
+            } else {
+                return number;
+            }
+
+        }
+
+
+
+        //    adding event listeners and diciding which function should be created
+        startButton.addEventListener('click', startTimmer);
+        stopButton.addEventListener('click', stopTimmer);
+        resetButton.addEventListener('click', resetTimmer);
+
+    </script>
+</body>
+
+</html>
